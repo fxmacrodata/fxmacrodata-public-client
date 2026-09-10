@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fxmacrodata-public-client"
+version = "0.1.0"
+description = "Public FXMacroData REST and MCP client for native integrations"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = ["requests>=2.32,<3", "jsonschema>=4.23,<5"]
+
+[project.urls]
+Homepage = "https://fxmacrodata.com"
+Documentation = "https://fxmacrodata.com/documentation/reference"
+
+[tool.setuptools]
+packages = ["fxmacrodata_public"]
+
+[tool.setuptools.package-data]
+fxmacrodata_public = ["operations.json", "mcp-tools.json", "py.typed"]
