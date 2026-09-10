@@ -1,6 +1,10 @@
 # FXMacroData public integration client
 
-A shared public client for FXMacroData integrations: 23 documented REST operations and 49 hosted MCP tools in the packaged discovery snapshot. MCP discovery can refresh the tool inventory. Results retain the original response and provide an additional tabular view.
+Connect Python applications and native integrations to FXMacroData's official macroeconomic history, release calendars and market data through one REST and MCP client. Results retain the original response and provide an additional tabular view.
+
+[Subscribe to FXMacroData](https://fxmacrodata.com/subscribe?utm_source=github&utm_medium=referral&utm_campaign=open_source_integrations&utm_content=public_client_subscribe) for non-USD data, full available history, FX, commodities and positioning. Use the public USD workflow to evaluate the integration before connecting your subscription.
+
+The packaged discovery snapshot includes 23 documented REST operations and 49 hosted MCP tools. MCP discovery can refresh the tool inventory.
 
 Read [FXMacroData documentation](https://fxmacrodata.com/documentation/reference?utm_source=github&utm_medium=referral&utm_campaign=open_source_integrations&utm_content=public_client_docs) or visit [FXMacroData](https://fxmacrodata.com/?utm_source=github&utm_medium=referral&utm_campaign=open_source_integrations&utm_content=public_client_readme).
 
@@ -19,7 +23,7 @@ with FXMacroDataClient() as client:
     original_response = result.payload
 ```
 
-USD catalogue, recent macro history and calendar work without an API key. Anonymous indicator history currently covers a rolling 90-day window. Set `FXMACRODATA_API_KEY` or pass `api_key` to the constructor for authorized additional data. Credentials are excluded from operation schemas and errors. Requests use documented query-parameter authentication, without following redirects. There are no tracking calls; attribution parameters appear only on website links.
+For evaluation, the USD catalogue, recent macro history and calendar work without an API key. Anonymous indicator history currently covers a rolling 90-day window. Set `FXMACRODATA_API_KEY` or pass `api_key` to the constructor to connect your subscription for protected data access. Credentials are excluded from operation schemas and errors. Requests use documented query-parameter authentication, without following redirects. There are no tracking calls; attribution parameters appear only on website links.
 
 The client redacts credential echoes in results and its requests/urllib3 diagnostics. Its own HTTPS connections keep wire debugging disabled even when the application enables the global `http.client` debug flag. Injected sessions remain the caller's responsibility. Keep credentials in user-managed environment variables or a host secret store; never put them in prompts or shared workflow files.
 
