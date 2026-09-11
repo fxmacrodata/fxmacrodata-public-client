@@ -20,6 +20,7 @@ from referencing import Registry
 from referencing.exceptions import NoSuchResource, Unresolvable
 import requests
 from .transport import CredentialSafeAdapter, protected_diagnostics, redact_text
+from .pagination import collect_history, paginated_history_path
 
 API_ORIGIN = "https://api.fxmacrodata.com"
 MCP_URL = "https://mcp.fxmacrodata.com/mcp"
@@ -288,6 +289,55 @@ class FXMacroDataClient:
         with self._lock, protected_diagnostics(self._api_key):
             return self._execute(operation_name, arguments)
 
+    def history(self, operation_name: str, arguments: dict[str, Any] | None = None, *, max_pages=10000, resume=None) -> Result:
+        """Download every page of a paginated REST operation, preserving metadata."""
+        operation = self._operations.get(operation_name)
+        if operation is None or operation.method != "GET" or not any(p["name"] == "offset" for p in operation.parameters):
+            raise FXMacroDataError("Complete history requires an offset-paginated REST operation.")
+        payload = collect_history(lambda args: self.execute(operation_name, args).payload,
+                                  arguments, max_pages=max_pages, resume=resume, request_id=operation_name,
+                                  require_pagination=True)
+        return Result(operation_name, payload)
+
+    def history_path(self, path: str, params=None, *, max_pages=10000, resume=None) -> dict:
+        """Complete read from an FXMacroData REST path, retaining all page metadata."""
+        if not isinstance(path, str) or not re.fullmatch(r"/v1/[A-Za-z0-9_/-]+", path) or ".." in path:
+            raise FXMacroDataError("Use an FXMacroData /v1/ REST path.")
+        query = dict(params or {})
+        if any(k.lower() in {"api_key", "access_token", "authorization"} for k in query):
+            raise FXMacroDataError("Pass authentication through the client constructor.")
+        def fetch(page):
+            headers = {"Accept": "application/json"}
+            if self._api_key:
+                headers["X-API-Key"] = self._api_key
+            with self._lock, protected_diagnostics(self._api_key):
+                for attempt in range(3):
+                    try:
+                        response = self._request("GET", API_ORIGIN + path, params=page, headers=headers)
+                    except FXMacroDataError:
+                        if attempt == 2:
+                            raise
+                        time.sleep(2 ** attempt)
+                        continue
+                    if response.status_code in {429, 500, 502, 503, 504} and attempt < 2:
+                        retry = response.headers.get("Retry-After", str(2 ** attempt))
+                        try:
+                            delay = max(0, float(retry))
+                        except ValueError:
+                            from datetime import datetime, timezone
+                            from email.utils import parsedate_to_datetime
+                            try:
+                                delay = max(0, (parsedate_to_datetime(retry) - datetime.now(timezone.utc)).total_seconds())
+                            except (ValueError, TypeError):
+                                delay = 2 ** attempt
+                        if delay <= 30:
+                            response.close()
+                            time.sleep(delay)
+                            continue
+                    return self._safe(self._read_json(response))
+        return collect_history(fetch, query, max_pages=max_pages, resume=resume, request_id=path,
+                               require_pagination=paginated_history_path(path))
+
     def _execute(self, operation_name: str, arguments: dict[str, Any] | None) -> Result:
         if not isinstance(operation_name, str):
             raise FXMacroDataError("Unknown FXMacroData operation. Use operation discovery.")
@@ -308,6 +358,7 @@ class FXMacroDataClient:
         path = op.path
         params: dict[str, Any] = self._auth_params()
         headers = {"Accept": "application/json"}
+        body: dict[str, Any] | None = None
         for parameter in op.parameters:
             name = parameter["name"]
             if name not in args or args[name] is None:
@@ -321,12 +372,14 @@ class FXMacroDataClient:
                 if "\r" in str(value) or "\n" in str(value):
                     raise FXMacroDataError("Invalid event cursor.")
                 headers[name] = str(value)
+            elif parameter["in"] == "body":
+                body = value
             else:
                 params[name] = str(value).lower() if isinstance(value, bool) else value
         if operation_name == "stream_events":
             payload = self._stream(path, params, headers, args)
         else:
-            payload = self._read_json(self._request("GET", API_ORIGIN + path, params=params, headers=headers))
+            payload = self._read_json(self._request(op.method, API_ORIGIN + path, params=params, headers=headers, body=body))
         return Result(op.name, self._safe(payload), API_ORIGIN + path)
 
     @staticmethod

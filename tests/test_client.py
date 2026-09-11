@@ -46,10 +46,11 @@ class Session:
 
 def test_inventory_is_complete_and_credentials_are_not_model_arguments():
     operations = list_operations()
-    assert len(operations) == 72
-    assert len({op.name for op in operations}) == 72
-    assert sum(op.method == "GET" for op in operations) == 23
-    assert sum(op.method == "MCP" for op in operations) == 49
+    assert len(operations) == 79
+    assert len({op.name for op in operations}) == 79
+    assert sum(op.method == "GET" for op in operations) == 28
+    assert sum(op.method == "POST" for op in operations) == 1
+    assert sum(op.method == "MCP" for op in operations) == 50
     assert "mcp_seasonality" in {op.name for op in operations}
     assert all("api_key" not in op.input_schema.get("properties", {}) for op in operations)
 
@@ -61,13 +62,15 @@ def test_every_rest_operation_routes_to_fixed_origin_and_preserves_payload(op):
     response = Response(payload)
     transport = Session(response)
     client = FXMacroDataClient(api_key="unit-test-credential", session=transport)
-    args = {name: {"currency": "usd", "base": "eur", "quote": "usd", "indicator": "inflation", "factor": "monetary_stance"}.get(name, "sample") for name in op.input_schema.get("required", [])}
+    args = {name: {"currency": "usd", "base": "eur", "quote": "usd", "indicator": "inflation", "factor": "monetary_stance", "body": {"series": [{"currency": "usd", "indicator": "policy_rate"}], "decision_times": ["2026-09-01T00:00:00Z"], "start_date": "2026-08-01", "end_date": "2026-09-01"}}.get(name, "sample") for name in op.input_schema.get("required", [])}
     result = client.execute(op.name, args)
     method, url, options = transport.calls[0]
-    assert method == "GET" and url.startswith("https://api.fxmacrodata.com/v1/")
+    assert method == op.method and url.startswith("https://api.fxmacrodata.com/v1/")
     assert "{" not in url and "?" not in url
     assert options["params"]["api_key"] == "unit-test-credential"
     assert options["allow_redirects"] is False
+    assert options["json"] == args.get("body")
+    assert "body" not in options["params"]
     assert result.payload == payload and result.records() == payload["data"]
     assert "unit-test-credential" not in repr(result)
     assert response.closed
@@ -269,6 +272,27 @@ def test_malformed_initialization_is_safe_and_does_not_cache_session(result):
     assert "private" not in str(error.value)
     assert client._mcp_headers is None and len(transport.calls) == 1
     assert response.closed
+
+
+@pytest.mark.parametrize("body", [
+    {},
+    {"series": [], "decision_times": [], "start_date": "2026-08-01", "end_date": "2026-09-01"},
+    {"series": [{"currency": "usd", "indicator": "policy_rate", "api_key": "fixture"}], "decision_times": ["2026-09-01"], "start_date": "2026-08-01", "end_date": "2026-09-01"},
+    {"series": [{"currency": "usd", "indicator": "policy_rate"}], "decision_times": ["2026-09-01"], "start_date": "2026-08-01", "end_date": "2026-09-01", "url": "https://example.com"},
+])
+def test_research_panel_rejects_invalid_nested_input_without_network(body):
+    transport = Session()
+    with pytest.raises(FXMacroDataError, match="input schema"):
+        FXMacroDataClient(api_key="", session=transport).execute("research_panel", {"body": body})
+    assert transport.calls == []
+
+
+def test_public_operation_schemas_are_valid_and_need_no_remote_references():
+    from jsonschema import Draft202012Validator
+
+    for operation in list_operations():
+        Draft202012Validator.check_schema(operation.input_schema)
+        assert '"$ref"' not in json.dumps(operation.input_schema)
 
 
 @pytest.mark.parametrize("envelope", [

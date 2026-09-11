@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fxmacrodata-public-client"
-version = "0.1.0"
+version = "0.1.1"
 description = "Public FXMacroData REST and MCP client for native integrations"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -17,6 +17,10 @@ Documentation = "https://fxmacrodata.com/documentation/reference"
 
 [tool.setuptools]
 packages = ["fxmacrodata_public"]
+include-package-data = false
 
 [tool.setuptools.package-data]
 fxmacrodata_public = ["operations.json", "mcp-tools.json", "py.typed"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["*.pyc", "__pycache__/*", "**/__pycache__/*"]

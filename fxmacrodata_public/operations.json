@@ -35,7 +35,7 @@
       "properties": {
         "base": {
           "type": "string",
-          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "AUD"
           ],
@@ -44,7 +44,7 @@
         },
         "quote": {
           "type": "string",
-          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "USD"
           ],
@@ -111,6 +111,18 @@
             "sma_20,rsi_14,macd"
           ],
           "title": "Indicators"
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Pin the content version returned by the first page; changed history returns 409.",
+          "title": "Dataset Version"
         }
       },
       "required": [
@@ -126,7 +138,7 @@
         "required": true,
         "schema": {
           "type": "string",
-          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "AUD"
           ],
@@ -140,7 +152,7 @@
         "required": true,
         "schema": {
           "type": "string",
-          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "USD"
           ],
@@ -237,6 +249,23 @@
             "sma_20,rsi_14,macd"
           ],
           "title": "Indicators"
+        }
+      },
+      {
+        "name": "dataset_version",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Pin the content version returned by the first page; changed history returns 409.",
+          "title": "Dataset Version"
         }
       }
     ]
@@ -449,7 +478,7 @@
       "properties": {
         "currency": {
           "type": "string",
-          "description": "Required path parameter. The 3-letter currency code (e.g., USD, AUD, EUR, GBP, CHF) Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. The 3-letter currency code (e.g., USD, AUD, EUR, GBP, CHF) Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "USD"
           ],
@@ -497,7 +526,7 @@
         "required": true,
         "schema": {
           "type": "string",
-          "description": "Required path parameter. The 3-letter currency code (e.g., USD, AUD, EUR, GBP, CHF) Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. The 3-letter currency code (e.g., USD, AUD, EUR, GBP, CHF) Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "USD"
           ],
@@ -562,7 +591,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, COMM, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, COMM, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         },
         "indicator": {
           "type": "string",
@@ -612,7 +641,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, COMM, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, COMM, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         }
       },
       {
@@ -716,7 +745,7 @@
       "properties": {
         "base": {
           "type": "string",
-          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "AUD"
           ],
@@ -725,7 +754,7 @@
         },
         "quote": {
           "type": "string",
-          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "USD"
           ],
@@ -827,6 +856,25 @@
           "description": "Optional query parameter. Number of rows to skip after most-recent-first ordering.",
           "default": 0,
           "title": "Offset"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Explicit UTC information cutoff for verified vintage replay; date means start of day.",
+          "title": "As Of"
+        },
+        "availability": {
+          "type": "string",
+          "pattern": "^(public|captured)$",
+          "description": "Optional query parameter. Source-public or captured-value availability clock.",
+          "default": "public",
+          "title": "Availability"
         }
       },
       "required": [
@@ -842,7 +890,7 @@
         "required": true,
         "schema": {
           "type": "string",
-          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Base currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "AUD"
           ],
@@ -856,7 +904,7 @@
         "required": true,
         "schema": {
           "type": "string",
-          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Quote currency code Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD.",
           "examples": [
             "USD"
           ],
@@ -1004,6 +1052,35 @@
           "default": 0,
           "title": "Offset"
         }
+      },
+      {
+        "name": "as_of",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Explicit UTC information cutoff for verified vintage replay; date means start of day.",
+          "title": "As Of"
+        }
+      },
+      {
+        "name": "availability",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "^(public|captured)$",
+          "description": "Optional query parameter. Source-public or captured-value availability clock.",
+          "default": "public",
+          "title": "Availability"
+        }
       }
     ]
   },
@@ -1017,7 +1094,7 @@
       "properties": {
         "currency": {
           "type": "string",
-          "description": "Required path parameter. Currency code Allowed values: AUD, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Currency code Allowed values: AUD, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, MYR, NOK, NZD, PEN, SEK, THB, USD.",
           "examples": [
             "GBP"
           ],
@@ -1087,6 +1164,51 @@
             "2026-06-01"
           ],
           "title": "Date"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Explicit UTC information cutoff for verified vintage replay; date means start of day.",
+          "title": "As Of"
+        },
+        "availability": {
+          "type": "string",
+          "pattern": "^(public|captured)$",
+          "description": "Optional query parameter. Source-public or captured-value availability clock.",
+          "default": "public",
+          "title": "Availability"
+        },
+        "max_staleness_days": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 366,
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Maximum reference-date age; defaults to 7 with as_of, otherwise 60.",
+          "title": "Max Staleness Days"
+        },
+        "require_common_date": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Require all populated curve nodes to share a reference date; defaults true with as_of.",
+          "title": "Require Common Date"
         }
       },
       "required": [
@@ -1101,7 +1223,7 @@
         "required": true,
         "schema": {
           "type": "string",
-          "description": "Required path parameter. Currency code Allowed values: AUD, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NOK, NZD, PEN, SEK, THB, USD.",
+          "description": "Required path parameter. Currency code Allowed values: AUD, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, MYR, NOK, NZD, PEN, SEK, THB, USD.",
           "examples": [
             "GBP"
           ],
@@ -1196,6 +1318,71 @@
             "2026-06-01"
           ],
           "title": "Date"
+        }
+      },
+      {
+        "name": "as_of",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Explicit UTC information cutoff for verified vintage replay; date means start of day.",
+          "title": "As Of"
+        }
+      },
+      {
+        "name": "availability",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "^(public|captured)$",
+          "description": "Optional query parameter. Source-public or captured-value availability clock.",
+          "default": "public",
+          "title": "Availability"
+        }
+      },
+      {
+        "name": "max_staleness_days",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 366,
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Maximum reference-date age; defaults to 7 with as_of, otherwise 60.",
+          "title": "Max Staleness Days"
+        }
+      },
+      {
+        "name": "require_common_date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Require all populated curve nodes to share a reference date; defaults true with as_of.",
+          "title": "Require Common Date"
         }
       }
     ]
@@ -1470,7 +1657,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, INR, JPY, NOK, NZD, PEN, PLN, SEK, USD, ZAR."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, ILS, INR, JPY, NGN, NOK, NZD, PEN, PLN, SEK, USD, ZAR."
         },
         "limit": {
           "type": "integer",
@@ -1505,7 +1692,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, INR, JPY, NOK, NZD, PEN, PLN, SEK, USD, ZAR."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, ILS, INR, JPY, NGN, NOK, NZD, PEN, PLN, SEK, USD, ZAR."
         }
       },
       {
@@ -1827,7 +2014,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         },
         "indicator": {
           "type": "string",
@@ -2067,6 +2254,24 @@
           ],
           "description": "Optional query parameter. Return groups strictly before this YYYY-MM-DD period date. Use the previous response's `next_cursor` for bounded pagination.",
           "title": "Before Date"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of",
+          "description": "Optional query parameter."
+        },
+        "event_compatible_only": {
+          "type": "boolean",
+          "default": false,
+          "title": "Event Compatible Only",
+          "description": "Optional query parameter."
         }
       },
       "required": [
@@ -2084,7 +2289,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         }
       },
       {
@@ -2410,6 +2615,34 @@
           "description": "Optional query parameter. Return groups strictly before this YYYY-MM-DD period date. Use the previous response's `next_cursor` for bounded pagination.",
           "title": "Before Date"
         }
+      },
+      {
+        "name": "as_of",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "event_compatible_only",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false,
+          "title": "Event Compatible Only",
+          "description": "Optional query parameter."
+        }
       }
     ]
   },
@@ -2425,7 +2658,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         }
       },
       "required": [
@@ -2442,7 +2675,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         }
       }
     ]
@@ -2459,7 +2692,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         },
         "indicator": {
           "type": "string",
@@ -2663,6 +2896,50 @@
           ],
           "default": true,
           "title": "Official Only"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of",
+          "description": "Optional query parameter."
+        },
+        "availability": {
+          "enum": [
+            "public",
+            "captured"
+          ],
+          "type": "string",
+          "default": "public",
+          "title": "Availability",
+          "description": "Optional query parameter."
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Version",
+          "description": "Optional query parameter."
+        },
+        "value_mode": {
+          "enum": [
+            "normalized",
+            "source"
+          ],
+          "type": "string",
+          "default": "normalized",
+          "title": "Value Mode",
+          "description": "Optional query parameter."
         }
       },
       "required": [
@@ -2680,7 +2957,7 @@
           "type": "string",
           "title": "Currency",
           "example": "AUD",
-          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, ILS, JPY, NGN, NOK, NZD, PEN, SEK, THB, USD."
+          "description": "Required path parameter. Allowed values: AUD, BRL, CAD, CHF, CNH, CNY, DKK, EUR, GBP, HUF, ILS, JPY, KRW, MYR, NGN, NOK, NZD, PEN, SEK, THB, TWD, USD."
         }
       },
       {
@@ -2954,6 +3231,70 @@
           ],
           "default": true,
           "title": "Official Only"
+        }
+      },
+      {
+        "name": "as_of",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "availability",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "public",
+            "captured"
+          ],
+          "type": "string",
+          "default": "public",
+          "title": "Availability",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "dataset_version",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Version",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "value_mode",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "normalized",
+            "source"
+          ],
+          "type": "string",
+          "default": "normalized",
+          "title": "Value Mode",
+          "description": "Optional query parameter."
         }
       }
     ]
@@ -3684,6 +4025,1057 @@
             }
           ],
           "title": "Last-Event-Id"
+        }
+      }
+    ]
+  },
+  {
+    "name": "reference_rates",
+    "path": "/v1/fx/reference-rates/{base}/{quote}",
+    "method": "GET",
+    "description": "Get timestamped official FX reference rates",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "string",
+          "description": "Required path parameter. Base currency code",
+          "examples": [
+            "EUR"
+          ],
+          "title": "Base"
+        },
+        "quote": {
+          "type": "string",
+          "description": "Required path parameter. Quote currency code",
+          "examples": [
+            "USD"
+          ],
+          "title": "Quote"
+        },
+        "date": {
+          "type": "string",
+          "description": "Optional query parameter. Single reference date YYYY-MM-DD. Overrides start_date/end_date.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "Date"
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Optional query parameter. Start reference date YYYY-MM-DD.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "Start Date"
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Optional query parameter. End reference date YYYY-MM-DD.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "End Date"
+        },
+        "source": {
+          "type": "string",
+          "description": "Optional query parameter. Optional source id filter, for example ecb_eurofxref_daily.",
+          "title": "Source"
+        },
+        "timestamp_type": {
+          "type": "string",
+          "description": "Optional query parameter. Optional timestamp type filter, for example fixing or published.",
+          "title": "Timestamp Type"
+        },
+        "native_only": {
+          "type": "boolean",
+          "description": "Optional query parameter. Return only rows stored natively for the requested pair.",
+          "default": false,
+          "title": "Native Only"
+        },
+        "include_source_legs": {
+          "type": "boolean",
+          "description": "Optional query parameter. Include derivation source legs when a rate is inverted or crossed.",
+          "default": true,
+          "title": "Include Source Legs"
+        },
+        "order": {
+          "enum": [
+            "timestamp_asc",
+            "timestamp_desc",
+            "date_asc",
+            "date_desc"
+          ],
+          "type": "string",
+          "description": "Optional query parameter. Result ordering.",
+          "default": "timestamp_asc",
+          "title": "Order"
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 1,
+          "description": "Optional query parameter. Maximum rows to return. Maximum 100.",
+          "default": 100,
+          "title": "Limit"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Optional query parameter. Number of rows to skip.",
+          "default": 0,
+          "title": "Offset"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. One-based page number.",
+          "title": "Page"
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Pin first-page content version; changed history returns 409.",
+          "title": "Dataset Version"
+        }
+      },
+      "required": [
+        "base",
+        "quote"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": [
+      {
+        "name": "base",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "Required path parameter. Base currency code",
+          "examples": [
+            "EUR"
+          ],
+          "title": "Base"
+        }
+      },
+      {
+        "name": "quote",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "Required path parameter. Quote currency code",
+          "examples": [
+            "USD"
+          ],
+          "title": "Quote"
+        }
+      },
+      {
+        "name": "date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. Single reference date YYYY-MM-DD. Overrides start_date/end_date.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "Date"
+        }
+      },
+      {
+        "name": "start_date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. Start reference date YYYY-MM-DD.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "Start Date"
+        }
+      },
+      {
+        "name": "end_date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. End reference date YYYY-MM-DD.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "End Date"
+        }
+      },
+      {
+        "name": "source",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. Optional source id filter, for example ecb_eurofxref_daily.",
+          "title": "Source"
+        }
+      },
+      {
+        "name": "timestamp_type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. Optional timestamp type filter, for example fixing or published.",
+          "title": "Timestamp Type"
+        }
+      },
+      {
+        "name": "native_only",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "description": "Optional query parameter. Return only rows stored natively for the requested pair.",
+          "default": false,
+          "title": "Native Only"
+        }
+      },
+      {
+        "name": "include_source_legs",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "description": "Optional query parameter. Include derivation source legs when a rate is inverted or crossed.",
+          "default": true,
+          "title": "Include Source Legs"
+        }
+      },
+      {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "timestamp_asc",
+            "timestamp_desc",
+            "date_asc",
+            "date_desc"
+          ],
+          "type": "string",
+          "description": "Optional query parameter. Result ordering.",
+          "default": "timestamp_asc",
+          "title": "Order"
+        }
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 1,
+          "description": "Optional query parameter. Maximum rows to return. Maximum 100.",
+          "default": 100,
+          "title": "Limit"
+        }
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Optional query parameter. Number of rows to skip.",
+          "default": 0,
+          "title": "Offset"
+        }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. One-based page number.",
+          "title": "Page"
+        }
+      },
+      {
+        "name": "dataset_version",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Pin first-page content version; changed history returns 409.",
+          "title": "Dataset Version"
+        }
+      }
+    ]
+  },
+  {
+    "name": "session_rates",
+    "path": "/v1/fx/session-rates/{base}/{quote}",
+    "method": "GET",
+    "description": "Get official FX session-close reference rates",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "string",
+          "description": "Required path parameter. Base currency code",
+          "examples": [
+            "EUR"
+          ],
+          "title": "Base"
+        },
+        "quote": {
+          "type": "string",
+          "description": "Required path parameter. Quote currency code",
+          "examples": [
+            "USD"
+          ],
+          "title": "Quote"
+        },
+        "session": {
+          "type": "string",
+          "description": "Required query parameter. Session name: sydney, tokyo, london, or new_york.",
+          "examples": [
+            "london"
+          ],
+          "title": "Session"
+        },
+        "date": {
+          "type": "string",
+          "description": "Optional query parameter. Single reference date YYYY-MM-DD. Overrides start_date/end_date.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "Date"
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Optional query parameter. Start reference date YYYY-MM-DD.",
+          "title": "Start Date"
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Optional query parameter. End reference date YYYY-MM-DD.",
+          "title": "End Date"
+        },
+        "order": {
+          "enum": [
+            "timestamp_asc",
+            "timestamp_desc",
+            "date_asc",
+            "date_desc"
+          ],
+          "type": "string",
+          "description": "Optional query parameter. Result ordering.",
+          "default": "date_asc",
+          "title": "Order"
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 1,
+          "description": "Optional query parameter. Maximum rows to return. Maximum 100.",
+          "default": 100,
+          "title": "Limit"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Optional query parameter. Number of rows to skip.",
+          "default": 0,
+          "title": "Offset"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. One-based page number.",
+          "title": "Page"
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Pin first-page content version; changed history returns 409.",
+          "title": "Dataset Version"
+        }
+      },
+      "required": [
+        "base",
+        "quote",
+        "session"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": [
+      {
+        "name": "base",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "Required path parameter. Base currency code",
+          "examples": [
+            "EUR"
+          ],
+          "title": "Base"
+        }
+      },
+      {
+        "name": "quote",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "Required path parameter. Quote currency code",
+          "examples": [
+            "USD"
+          ],
+          "title": "Quote"
+        }
+      },
+      {
+        "name": "session",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "Required query parameter. Session name: sydney, tokyo, london, or new_york.",
+          "examples": [
+            "london"
+          ],
+          "title": "Session"
+        }
+      },
+      {
+        "name": "date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. Single reference date YYYY-MM-DD. Overrides start_date/end_date.",
+          "examples": [
+            "2026-07-10"
+          ],
+          "title": "Date"
+        }
+      },
+      {
+        "name": "start_date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. Start reference date YYYY-MM-DD.",
+          "title": "Start Date"
+        }
+      },
+      {
+        "name": "end_date",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "description": "Optional query parameter. End reference date YYYY-MM-DD.",
+          "title": "End Date"
+        }
+      },
+      {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "timestamp_asc",
+            "timestamp_desc",
+            "date_asc",
+            "date_desc"
+          ],
+          "type": "string",
+          "description": "Optional query parameter. Result ordering.",
+          "default": "date_asc",
+          "title": "Order"
+        }
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 1,
+          "description": "Optional query parameter. Maximum rows to return. Maximum 100.",
+          "default": 100,
+          "title": "Limit"
+        }
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Optional query parameter. Number of rows to skip.",
+          "default": 0,
+          "title": "Offset"
+        }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. One-based page number.",
+          "title": "Page"
+        }
+      },
+      {
+        "name": "dataset_version",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Pin first-page content version; changed history returns 409.",
+          "title": "Dataset Version"
+        }
+      }
+    ]
+  },
+  {
+    "name": "prediction_coverage",
+    "path": "/v1/predictions/coverage",
+    "method": "GET",
+    "description": "Which forecast publishers cover which currency (no API key)",
+    "input_schema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "parameters": []
+  },
+  {
+    "name": "currency_prediction_coverage",
+    "path": "/v1/predictions/coverage/{currency}",
+    "method": "GET",
+    "description": "Per-indicator forecast coverage for one currency (no API key)",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 8,
+          "title": "Currency",
+          "description": "Required path parameter."
+        }
+      },
+      "required": [
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": [
+      {
+        "name": "currency",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 8,
+          "title": "Currency",
+          "description": "Required path parameter."
+        }
+      }
+    ]
+  },
+  {
+    "name": "currency_predictions",
+    "path": "/v1/predictions/{currency}",
+    "method": "GET",
+    "description": "Page official forecast vintages from one publisher",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "title": "Currency",
+          "description": "Required path parameter."
+        },
+        "prediction_source": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Required publisher identifier for source-scoped native forecast history.",
+          "title": "Prediction Source"
+        },
+        "variable": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 250
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Variable",
+          "description": "Optional query parameter."
+        },
+        "target_period": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Period",
+          "description": "Optional query parameter."
+        },
+        "publication_precision": {
+          "anyOf": [
+            {
+              "enum": [
+                "exact",
+                "date",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Publication Precision",
+          "description": "Optional query parameter."
+        },
+        "before_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Before Id",
+          "description": "Optional query parameter."
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 1000,
+          "minimum": 1,
+          "default": 100,
+          "title": "Limit",
+          "description": "Optional query parameter."
+        }
+      },
+      "required": [
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": [
+      {
+        "name": "currency",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "title": "Currency",
+          "description": "Required path parameter."
+        }
+      },
+      {
+        "name": "prediction_source",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional query parameter. Required publisher identifier for source-scoped native forecast history.",
+          "title": "Prediction Source"
+        }
+      },
+      {
+        "name": "variable",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 250
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Variable",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "target_period",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Period",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "publication_precision",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "enum": [
+                "exact",
+                "date",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Publication Precision",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "before_id",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Before Id",
+          "description": "Optional query parameter."
+        }
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "maximum": 1000,
+          "minimum": 1,
+          "default": 100,
+          "title": "Limit",
+          "description": "Optional query parameter."
+        }
+      }
+    ]
+  },
+  {
+    "name": "research_panel",
+    "path": "/v1/research/panel",
+    "method": "POST",
+    "description": "Build a panel of values known at each decision time",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "properties": {
+            "series": {
+              "items": {
+                "properties": {
+                  "currency": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z]{3}$",
+                    "title": "Currency"
+                  },
+                  "indicator": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$",
+                    "title": "Indicator"
+                  },
+                  "max_age_days": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "maximum": 36500.0,
+                        "minimum": 0.0
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Max Age Days"
+                  }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "currency",
+                  "indicator"
+                ],
+                "title": "ResearchSeries"
+              },
+              "type": "array",
+              "maxItems": 6,
+              "minItems": 1,
+              "title": "Series"
+            },
+            "decision_times": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "maxItems": 10000,
+              "minItems": 1,
+              "title": "Decision Times"
+            },
+            "start_date": {
+              "type": "string",
+              "format": "date",
+              "title": "Start Date"
+            },
+            "end_date": {
+              "type": "string",
+              "format": "date",
+              "title": "End Date"
+            },
+            "availability": {
+              "type": "string",
+              "enum": [
+                "public",
+                "captured"
+              ],
+              "title": "Availability",
+              "default": "public"
+            },
+            "dataset_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Dataset Version"
+            }
+          },
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "series",
+            "decision_times",
+            "start_date",
+            "end_date"
+          ],
+          "title": "ResearchPanelRequest"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": [
+      {
+        "name": "body",
+        "in": "body",
+        "required": true,
+        "schema": {
+          "properties": {
+            "series": {
+              "items": {
+                "properties": {
+                  "currency": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z]{3}$",
+                    "title": "Currency"
+                  },
+                  "indicator": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$",
+                    "title": "Indicator"
+                  },
+                  "max_age_days": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "maximum": 36500.0,
+                        "minimum": 0.0
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Max Age Days"
+                  }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "currency",
+                  "indicator"
+                ],
+                "title": "ResearchSeries"
+              },
+              "type": "array",
+              "maxItems": 6,
+              "minItems": 1,
+              "title": "Series"
+            },
+            "decision_times": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "maxItems": 10000,
+              "minItems": 1,
+              "title": "Decision Times"
+            },
+            "start_date": {
+              "type": "string",
+              "format": "date",
+              "title": "Start Date"
+            },
+            "end_date": {
+              "type": "string",
+              "format": "date",
+              "title": "End Date"
+            },
+            "availability": {
+              "type": "string",
+              "enum": [
+                "public",
+                "captured"
+              ],
+              "title": "Availability",
+              "default": "public"
+            },
+            "dataset_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Dataset Version"
+            }
+          },
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "series",
+            "decision_times",
+            "start_date",
+            "end_date"
+          ],
+          "title": "ResearchPanelRequest"
         }
       }
     ]
