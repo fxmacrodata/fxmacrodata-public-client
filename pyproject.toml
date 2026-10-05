@@ -12,8 +12,8 @@ license = "MIT"
 dependencies = ["requests>=2.32,<3", "jsonschema>=4.23,<5"]
 
 [project.urls]
-Homepage = "https://fxmacrodata.com"
-Documentation = "https://fxmacrodata.com/documentation/reference"
+Homepage = "https://fxmacrodata.com/?utm_source=pypi&utm_medium=referral&utm_campaign=fxmacrodata-public-client&utm_content=homepage"
+Documentation = "https://fxmacrodata.com/documentation/reference?utm_source=pypi&utm_medium=referral&utm_campaign=fxmacrodata-public-client&utm_content=docs"
 
 [tool.setuptools]
 packages = ["fxmacrodata_public"]
