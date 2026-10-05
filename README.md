@@ -2,11 +2,11 @@
 
 Connect Python applications and native integrations to FXMacroData's official macroeconomic history, release calendars and market data through one REST and MCP client. Results retain the original response and provide an additional tabular view.
 
-[Subscribe to FXMacroData](https://fxmacrodata.com/subscribe?utm_source=github&utm_medium=referral&utm_campaign=open_source_integrations&utm_content=public_client_subscribe) for non-USD indicator history, full available history, FX, commodities and positioning. Use the public USD workflow to evaluate the integration before connecting your subscription.
+[Subscribe to FXMacroData](https://fxmacrodata.com/subscribe?utm_source=github&utm_medium=referral&utm_campaign=fxmacrodata-public-client&utm_content=subscribe) for non-USD indicator history, full available history, FX, commodities and positioning. Use the public USD workflow to evaluate the integration before connecting your subscription.
 
 The packaged discovery snapshot includes 29 documented REST operations and 50 hosted MCP tools. MCP discovery can refresh the tool inventory. The research-panel operation accepts its documented JSON request as `body`; all other REST arguments retain their documented parameter names.
 
-Read [FXMacroData documentation](https://fxmacrodata.com/documentation/reference?utm_source=github&utm_medium=referral&utm_campaign=open_source_integrations&utm_content=public_client_docs) or visit [FXMacroData](https://fxmacrodata.com/?utm_source=github&utm_medium=referral&utm_campaign=open_source_integrations&utm_content=public_client_readme).
+Read [FXMacroData documentation](https://fxmacrodata.com/documentation/reference?utm_source=github&utm_medium=referral&utm_campaign=fxmacrodata-public-client&utm_content=docs) or visit [FXMacroData](https://fxmacrodata.com/?utm_source=github&utm_medium=referral&utm_campaign=fxmacrodata-public-client&utm_content=readme).
 
 Install from the package directory or its built wheel:
 
