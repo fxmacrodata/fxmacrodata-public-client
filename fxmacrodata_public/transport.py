@@ -14,6 +14,29 @@ from urllib3.connectionpool import HTTPSConnectionPool
 _active_key: ContextVar[str | None] = ContextVar("fxmacrodata_transport_key", default=None)
 
 
+class SecretKey:
+    """An API key whose repr, str and pickled form never contain the value."""
+
+    __slots__ = ("_value",)
+
+    def __init__(self, value: str):
+        self._value = value
+
+    def reveal(self) -> str:
+        return self._value
+
+    def __bool__(self) -> bool:
+        return bool(self._value)
+
+    def __repr__(self) -> str:
+        return "SecretKey('**********')" if self._value else "SecretKey('')"
+
+    __str__ = __repr__
+
+    def __reduce__(self):
+        raise TypeError("FXMacroData API keys cannot be pickled.")
+
+
 def redact_text(value: str, api_key: str) -> str:
     if api_key:
         variants = {api_key, quote(api_key, safe=""), quote_plus(api_key, safe="")}

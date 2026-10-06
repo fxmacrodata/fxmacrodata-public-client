@@ -67,7 +67,8 @@ def test_every_rest_operation_routes_to_fixed_origin_and_preserves_payload(op):
     method, url, options = transport.calls[0]
     assert method == op.method and url.startswith("https://api.fxmacrodata.com/v1/")
     assert "{" not in url and "?" not in url
-    assert options["params"]["api_key"] == "unit-test-credential"
+    assert options["headers"]["X-API-Key"] == "unit-test-credential"
+    assert "api_key" not in options["params"]
     assert options["allow_redirects"] is False
     assert options["json"] == args.get("body")
     assert "body" not in options["params"]
@@ -107,7 +108,8 @@ def test_mcp_handshake_auth_session_and_original_content():
     result = FXMacroDataClient(api_key="unit-test-credential", session=transport).execute("mcp_ping")
     assert [c[2]["json"]["method"] for c in transport.calls] == ["initialize", "notifications/initialized", "tools/call"]
     assert transport.calls[2][2]["headers"]["Mcp-Session-Id"] == "synthetic-session"
-    assert all(c[2]["params"] == {"api_key": "unit-test-credential"} for c in transport.calls)
+    assert all(c[2]["headers"]["Authorization"] == "Bearer unit-test-credential" for c in transport.calls)
+    assert all("api_key" not in c[2]["params"] for c in transport.calls)
     assert result.payload == payload and result.records() == [{"fixture": "mcp-test"}]
 
 
@@ -400,13 +402,13 @@ def test_close_releases_allocated_mcp_session_once_at_fixed_origin():
                          headers={"Content-Type": "application/json", "Mcp-Session-Id": "fixture-session"})
     deleted = Response(status=204)
     session = Session(handshake, Response(status=202), Response({"jsonrpc": "2.0", "id": 2, "result": {"content": []}}), deleted)
-    client = FXMacroDataClient(api_key="fixture-key", session=session)
+    client = FXMacroDataClient(api_key="fixture-key-0123456789", session=session)
     client.execute("mcp_ping")
     client.close()
     client.close()
     method, url, kwargs = session.calls[-1]
     assert method == "DELETE" and url == "https://mcp.fxmacrodata.com/mcp"
-    assert kwargs["params"] == {"api_key": "fixture-key"}
+    assert kwargs["params"] == {} and kwargs["headers"]["Authorization"] == "Bearer fixture-key-0123456789"
     assert kwargs["headers"]["Mcp-Session-Id"] == "fixture-session"
     assert kwargs["timeout"] <= 2 and kwargs["allow_redirects"] is False
     assert deleted.closed and len(session.calls) == 4

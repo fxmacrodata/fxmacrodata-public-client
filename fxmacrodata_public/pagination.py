@@ -19,6 +19,20 @@ class DatasetChangedError(IncompleteHistoryError):
     """The dataset changed between pages. Restart the download."""
 
 
+def _count(value: Any) -> bool:
+    """A pagination count is a non-negative integer (bool is not a count)."""
+    return type(value) is int and value >= 0
+
+
+def _query_int(query: dict, name: str, minimum: int) -> None:
+    value = query[name]
+    if isinstance(value, str) and value.isdigit():
+        value = int(value)
+    if type(value) is not int or value < minimum:
+        raise ValueError(f"{name} must be an integer >= {minimum}")
+    query[name] = value
+
+
 def iter_pages(fetch: Callable[[dict], Mapping[str, Any]], params=None, *,
                max_pages: int = 10000, resume: dict | None = None, request_id: str = "",
                require_pagination: bool = False) -> Iterator[dict]:
@@ -35,14 +49,20 @@ def iter_pages(fetch: Callable[[dict], Mapping[str, Any]], params=None, *,
         raise ValueError("max_pages must be positive")
     query.setdefault("limit", 100)
     query.setdefault("offset", 0)
+    _query_int(query, "limit", 1)
+    _query_int(query, "offset", 0)
     identity = {k: v for k, v in query.items() if k not in {"offset", "dataset_version", "api_key", "access_token"}}
     request_hash = hashlib.sha256(json.dumps([request_id, identity], sort_keys=True, default=str).encode()).hexdigest()
+    if resume is not None and not isinstance(resume, dict):
+        raise IncompleteHistoryError("Resume checkpoint is invalid.")
     if resume and resume.get("request_hash") != request_hash:
         raise IncompleteHistoryError("Resume checkpoint belongs to a different history request.")
     if resume and resume.get("complete"):
         return
     version = (resume or {}).get("dataset_version") or query.get("dataset_version")
     if resume:
+        if not _count(resume.get("next_offset")) or not (resume.get("total_count") is None or _count(resume.get("total_count"))):
+            raise IncompleteHistoryError("Resume checkpoint is invalid.")
         query["offset"] = resume["next_offset"]
     if version:
         query["dataset_version"] = version
@@ -59,7 +79,8 @@ def iter_pages(fetch: Callable[[dict], Mapping[str, Any]], params=None, *,
             if hasattr(exc, "status_code"):
                 exc.resume = dict(checkpoint)
                 raise
-            raise IncompleteHistoryError("History download failed; resume from the last saved page.", resume=checkpoint) from None
+            reason = f" {exc}" if getattr(exc, "credential_safe_message", False) else ""
+            raise IncompleteHistoryError("History download failed; resume from the last saved page." + reason, resume=checkpoint) from None
         data = payload.get("data")
         if not isinstance(data, list):
             raise IncompleteHistoryError("History response has no data array.", resume=checkpoint)
@@ -83,6 +104,14 @@ def iter_pages(fetch: Callable[[dict], Mapping[str, Any]], params=None, *,
             return
         if not isinstance(page, dict) or not isinstance(page.get("has_more"), bool):
             raise IncompleteHistoryError("History pagination metadata is invalid.", resume=checkpoint)
+        # Every field the server supplies must be well formed; absent optional fields are allowed.
+        for name in ("offset", "returned_count", "limit"):
+            if name in page and not _count(page[name]):
+                raise IncompleteHistoryError(f"History pagination field {name} is invalid.", resume=checkpoint)
+        if page.get("total_count") is not None and not _count(page["total_count"]):
+            raise IncompleteHistoryError("History pagination field total_count is invalid.", resume=checkpoint)
+        if "next_offset" in page and page["next_offset"] is not None and not _count(page["next_offset"]):
+            raise IncompleteHistoryError("History pagination field next_offset is invalid.", resume=checkpoint)
         if page.get("offset", query["offset"]) != query["offset"]:
             raise IncompleteHistoryError("Server returned an unexpected page offset.", resume=checkpoint)
         if page.get("returned_count", len(data)) != len(data):
@@ -90,14 +119,19 @@ def iter_pages(fetch: Callable[[dict], Mapping[str, Any]], params=None, *,
         if total is not None and page.get("total_count") != total:
             raise DatasetChangedError("History row count changed between pages; restart the download.")
         total = page.get("total_count")
+        if total is not None and query["offset"] + len(data) > total:
+            raise IncompleteHistoryError("Page extends beyond the reported history.", resume=checkpoint)
         signature = hashlib.sha256(json.dumps(data, sort_keys=True, default=str).encode()).hexdigest()
         if data and signature in seen:
             raise IncompleteHistoryError("Server repeated a page; history is incomplete.", resume=checkpoint)
         seen.add(signature)
         more = page["has_more"]
         next_offset = page.get("next_offset")
-        if more and (not data or not isinstance(next_offset, int) or next_offset != query["offset"] + len(data)):
+        if more and (not data or not _count(next_offset) or next_offset <= query["offset"]
+                     or next_offset != query["offset"] + len(data)):
             raise IncompleteHistoryError("Pagination did not advance contiguously.", resume=checkpoint)
+        if not more and next_offset is not None and next_offset != query["offset"] + len(data):
+            raise IncompleteHistoryError("Final page reports a further offset.", resume=checkpoint)
         if not more and total is not None and query["offset"] + len(data) != total:
             raise IncompleteHistoryError("Final page does not complete the reported history.", resume=checkpoint)
         checkpoint = {"next_offset": next_offset if more else None,
